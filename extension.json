@@ -1,0 +1,14 @@
+{
+  "id": "builtin.gitignore",
+  "name": "gitignore",
+  "description": "Gitignore Integration",
+  "activation": ["onCommand:gitignore.add", "*"],
+  "main": "src/gitignoreMain.js",
+  "icon": "./icon.png",
+  "commands": [
+    {
+      "id": "gitignore.add",
+      "label": "Add gitignore"
+    }
+  ]
+}
