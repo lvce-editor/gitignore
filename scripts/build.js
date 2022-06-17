@@ -1,15 +1,7 @@
-import fs, { cpSync, readFileSync } from 'fs'
-import path from 'path'
-import { execSync, spawn } from 'child_process'
-import { mkdtemp } from 'fs/promises'
-import { tmpdir } from 'os'
-import { dirname, join } from 'path'
-import { performance } from 'perf_hooks'
+import { execSync } from 'child_process'
+import fs, { cpSync } from 'fs'
+import path, { dirname, join } from 'path'
 import { fileURLToPath } from 'url'
-import { rollup } from 'rollup'
-import { nodeResolve } from '@rollup/plugin-node-resolve'
-import commonjs from '@rollup/plugin-commonjs'
-import json from '@rollup/plugin-json'
 
 const DEPENDENCIES = [
   '@octokit/rest',
@@ -19,14 +11,7 @@ const DEPENDENCIES = [
   '@octokit/plugin-rest-endpoint-methods',
 ]
 
-const getTmpDir = () => {
-  return mkdtemp(join(tmpdir(), 'foo-'))
-}
-
 const __dirname = dirname(fileURLToPath(import.meta.url))
-
-// TODO copy code into dist folder
-// TODO compress dist folder into extension.tar.br
 
 const root = path.join(__dirname, '..')
 
@@ -58,27 +43,6 @@ const getAllDependencies = (obj) => {
     return []
   }
   return [obj, ...Object.values(obj.dependencies).flatMap(getAllDependencies)]
-}
-
-// const getDependencyPaths = (obj) => {
-//   const result = new Set()
-//   result.add(obj.path)
-//   const addPaths = (obj) => {
-//     for (const [key, value] of Object.entries(obj)) {
-//       result.add(key)
-//       if (value.dependencies) {
-//         for (const dependency of Object.values(value.dependencies)) {
-//           addPaths(dependency)
-//         }
-//       }
-//     }
-//   }
-//   addPaths(obj)
-//   return result
-// }
-
-const getPath = (dependency) => {
-  return dependency.path
 }
 
 const getDependencies = () => {
