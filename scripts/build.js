@@ -1,15 +1,7 @@
 import { execSync } from 'child_process'
-import fs, { cpSync } from 'fs'
+import fs from 'fs'
 import path, { dirname, join } from 'path'
 import { fileURLToPath } from 'url'
-
-const DEPENDENCIES = [
-  '@octokit/rest',
-  '@octokit/core',
-  '@octokit/plugin-paginate-rest',
-  '@octokit/plugin-request-log',
-  '@octokit/plugin-rest-endpoint-methods',
-]
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
@@ -27,16 +19,6 @@ fs.copyFileSync(
   join(root, 'dist', 'extension.json')
 )
 fs.cpSync(join(root, 'src'), join(root, 'dist', 'src'), { recursive: true })
-
-for (const dependency of DEPENDENCIES) {
-  cpSync(
-    join(root, 'node_modules', dependency),
-    join(root, 'dist', 'node_modules', dependency),
-    {
-      recursive: true,
-    }
-  )
-}
 
 const getAllDependencies = (obj) => {
   if (!obj || !obj.dependencies) {
