@@ -3,7 +3,9 @@
   "version": "0.0.0-dev",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "e2e": "node --test"
+  },
   "type": "module",
   "keywords": [],
   "author": "",
