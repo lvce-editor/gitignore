@@ -13,7 +13,7 @@ const getTmpDir = () => {
   return mkdtemp(join(tmpdir(), 'foo-'))
 }
 
-const launchServer = async ({ port, name, folder, env }) => {
+const launchServer = async ({ port, folder, env }) => {
   const serverPath = join(
     __dirname,
     '..',
@@ -30,6 +30,7 @@ const launchServer = async ({ port, name, folder, env }) => {
       ...process.env,
       PORT: port,
       FOLDER: folder,
+      ONLY_EXTENSION: join(__dirname, '..', '..'),
     },
   })
   return new Promise((resolve, reject) => {
@@ -45,16 +46,15 @@ const launchServer = async ({ port, name, folder, env }) => {
 }
 
 export const runWithExtension = async (
-  name,
-  headless = Boolean(process.send),
+  headless = false,
   folder = '',
   env = {}
 ) => {
   folder ||= await getTmpDir()
   const port = await getPort()
-  const server = await launchServer({ port, name, folder, env })
+  const server = await launchServer({ port, folder, env })
   const browser = await chromium.launch({
-    headless,
+    headless: false,
   })
   const page = await browser.newPage({})
   console.log('visiting localhost')
