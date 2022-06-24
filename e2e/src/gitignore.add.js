@@ -38,7 +38,6 @@ test('gitignore.add', async () => {
   await writeFile(join(tmpDir1, 'FILE-2.txt'), 'content-2')
   const page = await runWithExtension({
     folder: tmpDir1,
-    name: 'builtin.gitignore',
     env: {
       VSCODE_GITIGNORE_BASE_URL: gitHubUri,
     },
@@ -109,6 +108,7 @@ build/
   await expect(quickPick).toBeHidden()
   const gitignorePath = join(tmpDir1, '.gitignore')
 
+  // TODO explorer should refresh at this point
   expect(existsSync(gitignorePath)).toBe(true)
   expect(readFileSync(gitignorePath, 'utf-8')).toBe(`# Gradle files
 .gradle/

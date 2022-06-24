@@ -31,6 +31,7 @@ const launchServer = async ({ port, folder, env }) => {
       PORT: port,
       FOLDER: folder,
       ONLY_EXTENSION: join(__dirname, '..', '..'),
+      ...env,
     },
   })
   return new Promise((resolve, reject) => {
@@ -45,11 +46,7 @@ const launchServer = async ({ port, folder, env }) => {
   })
 }
 
-export const runWithExtension = async (
-  headless = false,
-  folder = '',
-  env = {}
-) => {
+export const runWithExtension = async ({ folder = '', env = {} }) => {
   folder ||= await getTmpDir()
   const port = await getPort()
   const server = await launchServer({ port, folder, env })

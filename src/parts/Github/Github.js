@@ -13,6 +13,7 @@ const RE_GITIGNORE = /.gitignore/
 export const getGitignoreFilesFromGithubApi = async (path) => {
   const { Octokit } = await import('@octokit/rest')
   const baseUrl = process.env.VSCODE_GITIGNORE_BASE_URL || undefined
+  console.log({ baseUrl })
   const octokit = new Octokit({
     baseUrl,
   })
