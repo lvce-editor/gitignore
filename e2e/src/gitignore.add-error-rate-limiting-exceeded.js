@@ -69,8 +69,4 @@ test('gitignore.add-error-rate-limiting-exceeded', async () => {
   await expect(errorMessage).toHaveText(
     `Error: Failed to show quickPick: VError: Failed to get gitignore files: Failed to load gitignore files from github api: "API rate limit exceeded for 0.0.0.0. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)"`
   )
-
-  if (process.send) {
-    process.send('succeeded')
-  }
 })
