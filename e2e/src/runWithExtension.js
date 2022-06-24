@@ -6,6 +6,7 @@ import { chromium } from '@playwright/test'
 import { fork } from 'child_process'
 import { dirname } from 'path'
 import { fileURLToPath } from 'url'
+import assert from 'assert'
 
 export const state = {
   /**
@@ -13,9 +14,16 @@ export const state = {
    */
   page: undefined,
   /**
+   * @type {import('@playwright/test').Browser|undefined}
+   */
+  browser: undefined,
+  /**
    * @type {import('child_process').ChildProcess|undefined}
    */
   childProcess: undefined,
+  /**
+   * @type{boolean}
+   */
   runImmediately: true,
   /**
    * @type{any}
@@ -63,23 +71,49 @@ const launchServer = async ({ port, folder, env }) => {
   })
 }
 
+const startBrowser = async ({ port, headless = false }) => {
+  assert(!state.browser, 'Browser should not be defined')
+  console.info('START BROWSER')
+  const browser = await chromium.launch({
+    headless,
+  })
+  state.browser = browser
+  const page = await browser.newPage({})
+  await page.goto(`http://localhost:${port}`)
+  state.page = page
+  return page
+}
+
 export const runWithExtension = async ({ folder = '', env = {} }) => {
   folder ||= await getTmpDir()
-  if (state.page && state.childProcess) {
+  const existingSetup = state.page && state.childProcess
+  if (existingSetup) {
+    console.info('recycle page')
+    state.childProcess.send({
+      jsonrpc: '2.0',
+      method: 'Platform.setEnvironmentVariables',
+      params: [
+        {
+          FOLDER: folder,
+          ...env,
+        },
+      ],
+    })
     await state.page.reload()
     return state.page
   }
-  const port = await getPort()
-
-  const server = await launchServer({ port, folder, env })
-  const browser = await chromium.launch({
-    headless: false,
+  console.log({
+    page: !!state.page,
+    childProcess: !!state.childProcess,
+    existingSetup,
   })
-  const page = await browser.newPage({})
-  console.log('visiting localhost')
-  await page.goto(`http://localhost:${port}`)
-  // @ts-ignore
-  state.page = page
+  const port = await getPort()
+  const server = await launchServer({ port, folder, env })
+
+  const page = await startBrowser({
+    headless: false,
+    port,
+  })
   return page
 }
 
@@ -100,14 +134,28 @@ export const test = async (name, fn) => {
   }
 }
 
+export const startAll = async () => {
+  const port = await getPort()
+  await launchServer({
+    port,
+    env: {},
+    folder: '',
+  })
+  const page = await startBrowser({ port })
+  return page
+}
+
 export const closeAll = async () => {
-  console.info('close all')
-  if (state.server) {
-    // @ts-ignore
-    state.server.close()
+  if (state.childProcess) {
+    state.childProcess.kill('SIGINT')
+    state.childProcess = undefined
   }
-  if (state.page) {
-    // @ts-ignore
-    await state.page.close()
-  }
+  // if (state.page) {
+  //   await state.page.close()
+  //   state.page = undefined
+  // }
+  // if (state.browser) {
+  //   await state.browser.close()
+  //   state.browser = undefined
+  // }
 }
