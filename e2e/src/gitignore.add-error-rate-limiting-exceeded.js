@@ -3,6 +3,7 @@ import express from 'express'
 import { mkdtemp, writeFile } from 'fs/promises'
 import getPort from 'get-port'
 import { join } from 'node:path'
+import test from 'node:test'
 import { tmpdir } from 'os'
 import { runWithExtension } from './runWithExtension.js'
 
@@ -27,7 +28,7 @@ const runGitHubServer = async (port) => {
   }
 }
 
-const main = async () => {
+test('gitignore.add-error-rate-limiting-exceeded', async () => {
   const gitHubServerPort = await getPort()
   const gitHubServer = await runGitHubServer(gitHubServerPort)
   const gitHubUri = gitHubServer.uri
@@ -72,6 +73,4 @@ const main = async () => {
   if (process.send) {
     process.send('succeeded')
   }
-}
-
-main()
+})
