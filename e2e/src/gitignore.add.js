@@ -4,6 +4,7 @@ import { existsSync, readFileSync } from 'fs'
 import { mkdtemp, writeFile } from 'fs/promises'
 import getPort from 'get-port'
 import { join } from 'node:path'
+import test from 'node:test'
 import { tmpdir } from 'os'
 import { runWithExtension } from './runWithExtension.js'
 
@@ -28,7 +29,7 @@ const runGitHubServer = async (port) => {
   }
 }
 
-const main = async () => {
+test('gitignore.add', async () => {
   const gitHubServerPort = await getPort()
   const gitHubServer = await runGitHubServer(gitHubServerPort)
   const gitHubUri = gitHubServer.uri
@@ -42,7 +43,6 @@ const main = async () => {
       VSCODE_GITIGNORE_BASE_URL: gitHubUri,
     },
   })
-  await page.goto('')
   gitHubServer.get('/repos/github/gitignore/contents', (req, res) => {
     console.log('PATH', req.path)
     res.status(200).json([
@@ -118,6 +118,4 @@ build/
   if (process.send) {
     process.send('succeeded')
   }
-}
-
-main()
+})
