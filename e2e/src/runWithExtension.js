@@ -29,6 +29,7 @@ export const state = {
    * @type{any}
    */
   tests: [],
+  port: 0,
 }
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
@@ -79,15 +80,13 @@ const startBrowser = async ({ port, headless = false }) => {
   })
   state.browser = browser
   const page = await browser.newPage({})
-  await page.goto(`http://localhost:${port}`)
   state.page = page
   return page
 }
 
 export const runWithExtension = async ({ folder = '', env = {} }) => {
   folder ||= await getTmpDir()
-  const existingSetup = state.page && state.childProcess
-  if (existingSetup) {
+  if (state.page && state.childProcess) {
     console.info('recycle page')
     state.childProcess.send({
       jsonrpc: '2.0',
@@ -99,7 +98,7 @@ export const runWithExtension = async ({ folder = '', env = {} }) => {
         },
       ],
     })
-    await state.page.reload()
+    await state.page.goto(`http://localhost:${state.port}`)
     return state.page
   }
   console.log({
@@ -141,6 +140,7 @@ export const startAll = async () => {
     env: {},
     folder: '',
   })
+  state.port = port
   const page = await startBrowser({ port })
   return page
 }
@@ -150,12 +150,13 @@ export const closeAll = async () => {
     state.childProcess.kill('SIGINT')
     state.childProcess = undefined
   }
-  // if (state.page) {
-  //   await state.page.close()
-  //   state.page = undefined
-  // }
-  // if (state.browser) {
-  //   await state.browser.close()
-  //   state.browser = undefined
-  // }
+  if (state.page) {
+    await state.page.close()
+    state.page = undefined
+  }
+  if (state.browser) {
+    await state.browser.close()
+    state.browser = undefined
+  }
+  console.log(process._getActiveHandles())
 }
