@@ -114,8 +114,4 @@ build/
 .gradle/
 build/
 `)
-
-  if (process.send) {
-    process.send('succeeded')
-  }
 })
