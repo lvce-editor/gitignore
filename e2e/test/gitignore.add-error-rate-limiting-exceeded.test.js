@@ -3,9 +3,8 @@ import express from 'express'
 import { mkdtemp, writeFile } from 'fs/promises'
 import getPort from 'get-port'
 import { join } from 'node:path'
-import test from 'node:test'
 import { tmpdir } from 'os'
-import { runWithExtension } from './runWithExtension.js'
+import { runWithExtension, test } from '../src/runWithExtension.js'
 
 const getTmpDir = () => {
   return mkdtemp(join(tmpdir(), 'foo-'))
@@ -29,6 +28,7 @@ const runGitHubServer = async (port) => {
 }
 
 test('gitignore.add-error-rate-limiting-exceeded', async () => {
+  console.info('running test')
   const gitHubServerPort = await getPort()
   const gitHubServer = await runGitHubServer(gitHubServerPort)
   const gitHubUri = gitHubServer.uri
@@ -68,4 +68,5 @@ test('gitignore.add-error-rate-limiting-exceeded', async () => {
   await expect(errorMessage).toHaveText(
     `Error: Failed to show quickPick: VError: Failed to get gitignore files: Failed to load gitignore files from github api: "API rate limit exceeded for 0.0.0.0. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)"`
   )
+  // console.info('test passed')
 })

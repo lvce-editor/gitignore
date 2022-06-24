@@ -4,9 +4,8 @@ import { existsSync, readFileSync } from 'fs'
 import { mkdtemp, writeFile } from 'fs/promises'
 import getPort from 'get-port'
 import { join } from 'node:path'
-import test from 'node:test'
 import { tmpdir } from 'os'
-import { runWithExtension } from './runWithExtension.js'
+import { runWithExtension, test } from '../src/runWithExtension.js'
 
 const getTmpDir = () => {
   return mkdtemp(join(tmpdir(), 'foo-'))
@@ -14,9 +13,10 @@ const getTmpDir = () => {
 
 const runGitHubServer = async (port) => {
   const app = express()
-  await new Promise((resolve) => {
-    app.listen(port, () => {
-      resolve(undefined)
+
+  const server = await new Promise((resolve) => {
+    const server = app.listen(port, () => {
+      resolve(server)
     })
   })
   return {
@@ -26,10 +26,13 @@ const runGitHubServer = async (port) => {
     get uri() {
       return `http://localhost:${port}`
     },
+    close() {
+      server.close()
+    },
   }
 }
 
-test('gitignore.add', async () => {
+test('gitignore.add', async (t) => {
   const gitHubServerPort = await getPort()
   const gitHubServer = await runGitHubServer(gitHubServerPort)
   const gitHubUri = gitHubServer.uri
@@ -114,4 +117,7 @@ build/
 .gradle/
 build/
 `)
+  // console.info('test passed')
+  // gitHubServer.close()
+  // await page.close()
 })
