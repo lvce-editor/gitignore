@@ -9,7 +9,8 @@
     "test:watch": "node --unhandled-rejections=warn --experimental-vm-modules ./node_modules/jest/bin/jest.js --watch",
     "dev": "npx @lvce-editor/server",
     "postinstall": "cd e2e && npm ci",
-    "e2e": "cd e2e && npm run e2e"
+    "e2e": "cd e2e && npm run e2e",
+    "e2e:headless": "cd e2e && npm run e2e:headless"
   },
   "keywords": [],
   "author": "",
