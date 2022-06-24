@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "e2e": "node --test"
+    "e2e": "node test/_all.js"
   },
   "type": "module",
   "keywords": [],

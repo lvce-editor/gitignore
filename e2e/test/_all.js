@@ -1,4 +1,4 @@
-import { closeAll, runTest, state } from '../src/runWithExtension.js'
+import { closeAll, runTest, startAll, state } from '../src/runWithExtension.js'
 
 const getTestFiles = async () => {
   return [
@@ -9,13 +9,15 @@ const getTestFiles = async () => {
 
 const main = async () => {
   state.runImmediately = false
+  await startAll()
+  console.info('SETUP COMPLETE')
   const testFiles = await getTestFiles()
   for (const testFile of testFiles) {
+    state.tests = []
     await import(testFile)
     for (const test of state.tests) {
       await runTest(test)
     }
-    state.tests = []
   }
   await closeAll()
 }
