@@ -102,11 +102,6 @@ export const runWithExtension = async ({ folder = '', env = {} }) => {
     await state.page.goto(`http://localhost:${state.port}`)
     return state.page
   }
-  console.log({
-    page: !!state.page,
-    childProcess: !!state.childProcess,
-    existingSetup,
-  })
   const port = await getPort()
   const server = await launchServer({ port, folder, env })
 
@@ -142,7 +137,8 @@ export const startAll = async () => {
     folder: '',
   })
   state.port = port
-  const page = await startBrowser({ port })
+  const headless = process.argv.includes('--headless')
+  const page = await startBrowser({ port, headless })
   return page
 }
 

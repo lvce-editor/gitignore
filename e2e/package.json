@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "e2e": "node test/_all.js"
+    "e2e": "node test/_all.js",
+    "e2e:headless": "node test/_all.js --headless"
   },
   "type": "module",
   "keywords": [],
