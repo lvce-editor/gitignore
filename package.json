@@ -20,7 +20,7 @@
     "xdg-basedir": "^5.1.0"
   },
   "devDependencies": {
-    "@lvce-editor/server": "^0.0.7",
+    "@lvce-editor/server": "^0.0.9",
     "@types/jest": "^28.1.3",
     "@types/jsonfile": "^6.1.0",
     "@types/node": "^18.0.0",
