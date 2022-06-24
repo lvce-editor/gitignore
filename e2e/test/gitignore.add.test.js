@@ -112,9 +112,10 @@ build/
   const gitignorePath = join(tmpDir1, '.gitignore')
 
   // TODO explorer should refresh at this point
-  //   expect(existsSync(gitignorePath)).toBe(true)
-  //   expect(readFileSync(gitignorePath, 'utf-8')).toBe(`# Gradle files
+  // expect(existsSync(gitignorePath)).toBe(true)
+  // expect(readFileSync(gitignorePath, 'utf-8')).toBe(`# Gradle files
   // .gradle/
   // build/
   // `)
+  await gitHubServer.close()
 })
