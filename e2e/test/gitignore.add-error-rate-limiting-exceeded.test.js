@@ -12,9 +12,9 @@ const getTmpDir = () => {
 
 const runGitHubServer = async (port) => {
   const app = express()
-  await new Promise((resolve) => {
-    app.listen(port, () => {
-      resolve(undefined)
+  const server = await new Promise((resolve) => {
+    const server = app.listen(port, () => {
+      resolve(server)
     })
   })
   return {
@@ -23,6 +23,9 @@ const runGitHubServer = async (port) => {
     },
     get uri() {
       return `http://localhost:${port}`
+    },
+    async close() {
+      server.close()
     },
   }
 }
@@ -68,5 +71,6 @@ test('gitignore.add-error-rate-limiting-exceeded', async () => {
   await expect(errorMessage).toHaveText(
     `Error: Failed to show quickPick: VError: Failed to get gitignore files: Failed to load gitignore files from github api: "API rate limit exceeded for 0.0.0.0. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)"`
   )
-  // console.info('test passed')
+
+  await gitHubServer.close()
 })

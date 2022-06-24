@@ -158,5 +158,4 @@ export const closeAll = async () => {
     await state.browser.close()
     state.browser = undefined
   }
-  console.log(process._getActiveHandles())
 }
