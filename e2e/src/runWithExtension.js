@@ -97,6 +97,7 @@ export const runWithExtension = async ({ folder = '', env = {} }) => {
           ...env,
         },
       ],
+      id: 999999999999,
     })
     await state.page.goto(`http://localhost:${state.port}`)
     return state.page
