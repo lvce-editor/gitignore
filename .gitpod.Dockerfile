@@ -1,5 +1,7 @@
 FROM gitpod/workspace-full:latest
 
+RUN sudo npx playwright install-deps
+
 RUN bash -c ". .nvm/nvm.sh \
     && nvm install 18.4.0 \
     && nvm use 18.4.0 \
