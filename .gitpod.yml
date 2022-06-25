@@ -1,5 +1,5 @@
 image:
-  file: .gitpod.dockerfile
+  file: .gitpod.Dockerfile
 
 tasks:
   - init: npm ci && cd packages/e2e && npx playwright install chromium && cd ../../ && npm test
