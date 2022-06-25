@@ -1,10 +1,14 @@
+import { readdirSync } from 'node:fs'
+import { dirname } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { closeAll, runTest, startAll, state } from '../src/runWithExtension.js'
 
+const __dirname = dirname(fileURLToPath(import.meta.url))
+
 const getTestFiles = async () => {
-  return [
-    './gitignore.add-error-rate-limiting-exceeded.test.js',
-    './gitignore.add.test.js',
-  ]
+  return readdirSync(__dirname)
+    .filter((x) => x !== '_all.js')
+    .map((x) => './' + x)
 }
 
 const main = async () => {
