@@ -19,8 +19,6 @@ jobs:
           node-version: '18.4.0'
       - uses: actions/cache@v3
         id: npm-cache
-        env:
-          PLAYWRIGHT_BROWSERS_PATH: 0
         with:
           path: '**/node_modules'
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -30,8 +28,11 @@ jobs:
         if: steps.npm-cache.outputs.cache-hit != 'true'
       - run: npm test
       - name: install playwright dependencies
-        working-directory: ./e2e
-        run: npx playwright install
+        working-directory: ./packages/e2e
+        run: npx playwright install chromium
+        if: steps.npm-cache.outputs.cache-hit != 'true'
+        env:
+          PLAYWRIGHT_BROWSERS_PATH: 0
       - name: Run headless test
         uses: GabrielBB/xvfb-action@v1
         with:
