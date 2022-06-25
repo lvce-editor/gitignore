@@ -1,2 +1,2 @@
 tasks:
-  - init: npm ci && npm test
+  - init: npm ci && cd packages/e2e && npx playwright install chromium && cd ../../ && npm test
