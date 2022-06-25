@@ -106,11 +106,11 @@ export const runWithExtension = async ({ folder = '', env = {} }) => {
   }
   const port = await getPort()
   const server = await launchServer({ port, folder, env })
-
   const page = await startBrowser({
     headless: false,
     port,
   })
+  await page.goto(`http://localhost:${port}`)
   return page
 }
 
