@@ -1,4 +1,4 @@
-FROM gitpod/workspace-full:latest
+FROM gitpod/workspace-full-vnc
 
 # Install playwright dependencies
 RUN sudo apt-get install libnss3 \
