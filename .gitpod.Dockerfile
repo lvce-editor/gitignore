@@ -1,7 +1,8 @@
 FROM gitpod/workspace-full-vnc
 
 # Install playwright dependencies
-RUN sudo apt-get install libnss3 \
+RUN sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
+        libnss3 \
         libnspr4 \
         libatk1.0-0 \
         libatk-bridge2.0-0 \
