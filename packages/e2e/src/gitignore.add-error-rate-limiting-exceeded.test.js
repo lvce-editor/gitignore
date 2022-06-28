@@ -1,10 +1,13 @@
-import { expect } from '@playwright/test'
 import express from 'express'
 import { mkdtemp, writeFile } from 'fs/promises'
 import getPort from 'get-port'
 import { join } from 'node:path'
 import { tmpdir } from 'os'
-import { runWithExtension, test } from '../src/runWithExtension.js'
+import {
+  runWithExtension,
+  test,
+  expect,
+} from '@lvce-editor/test-with-playwright'
 
 const getTmpDir = () => {
   return mkdtemp(join(tmpdir(), 'foo-'))
