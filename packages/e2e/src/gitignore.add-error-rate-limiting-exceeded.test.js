@@ -1,17 +1,13 @@
-import express from 'express'
-import { mkdtemp, writeFile } from 'fs/promises'
-import getPort from 'get-port'
-import { join } from 'node:path'
-import { tmpdir } from 'os'
 import {
+  expect,
+  getTmpDir,
   runWithExtension,
   test,
-  expect,
 } from '@lvce-editor/test-with-playwright'
-
-const getTmpDir = () => {
-  return mkdtemp(join(tmpdir(), 'foo-'))
-}
+import express from 'express'
+import { writeFile } from 'fs/promises'
+import getPort from 'get-port'
+import { join } from 'node:path'
 
 const runGitHubServer = async (port) => {
   const app = express()
