@@ -1,8 +1,8 @@
+import jsonfile from 'jsonfile'
 import { mkdir } from 'node:fs/promises'
 import { dirname, join } from 'node:path'
-import jsonfile from 'jsonfile'
 import VError from 'verror'
-import { xdgCache } from 'xdg-basedir'
+import * as Platform from '../Platform/Platform.js'
 
 // TODO update cache after specified amount of time
 // maybe cacheFirst strategy
@@ -12,7 +12,7 @@ const RE_GITIGNORE = /.gitignore/
 
 export const getGitignoreFilesFromGithubApi = async (path) => {
   const { Octokit } = await import('@octokit/rest')
-  const baseUrl = process.env.VSCODE_GITIGNORE_BASE_URL || undefined
+  const baseUrl = Platform.getBaseUrl()
   console.log({ baseUrl })
   const octokit = new Octokit({
     baseUrl,
@@ -25,6 +25,7 @@ export const getGitignoreFilesFromGithubApi = async (path) => {
       path,
     })
   } catch (error) {
+    // @ts-ignore
     throw new VError(error, 'Failed to load gitignore files from github api')
   }
   if ('x-ratelimit-remaining' in result.headers) {
@@ -46,8 +47,7 @@ const getGitignoreFilesFromCache = async (cachePath) => {
 
 const getGitignoreFilesRaw = async (path, { cache = false } = {}) => {
   const cachePath = join(
-    xdgCache,
-    'vscode-gitignore',
+    Platform.getCachePath(),
     'github',
     `${path || 'index'}.json`
   )
@@ -84,6 +84,7 @@ export const getGetGitIgnoreFiles = async (path, options) => {
       .map(toGitignoreFile)
     return gitignoreFiles
   } catch (error) {
+    // @ts-ignore
     throw new VError(error, 'Failed to get gitignore files')
   }
 }

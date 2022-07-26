@@ -18,7 +18,10 @@ export const download = async (url, outFile) => {
   } catch (error) {
     try {
       await rm(outFile)
-    } catch {}
+    } catch {
+      // ignore
+    }
+    // @ts-ignore
     throw new VError(error, `Failed to download "${url}"`)
   }
 }
