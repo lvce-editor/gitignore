@@ -1,5 +1,10 @@
-import * as ExtensionHostCommandGitignoreAdd from './parts/ExtensionHost/ExtensionHostCommandGitignoreAdd.js'
+const addGitignore = {
+  id: 'gitignore.add',
+  async execute() {
+    console.log('execute command')
+  },
+}
 
 export const activate = () => {
-  vscode.registerCommand(ExtensionHostCommandGitignoreAdd)
+  vscode.registerCommand(addGitignore)
 }
