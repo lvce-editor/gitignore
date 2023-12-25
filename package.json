@@ -7,15 +7,15 @@
   "scripts": {
     "postinstall": "lerna bootstrap --ci",
     "test": "lerna run test",
-    "dev": "npx @lvce-editor/server",
+    "dev": "node ./node_modules/@lvce-editor/server/bin/server.js --only-extension=packages/extension --test-path=packages/e2e",
     "e2e": "cd packages/e2e && npm run e2e",
     "e2e:headless": "cd packages/e2e && npm run e2e:headless"
   },
   "keywords": [],
-  "author": "",
+  "author": "Lvce Editor",
   "license": "MIT",
   "devDependencies": {
-    "@lvce-editor/server": "^0.0.21",
+    "@lvce-editor/server": "^0.21.6",
     "@types/node": "^20.10.5",
     "lerna": "^8.0.1",
     "prettier": "^3.1.1",
