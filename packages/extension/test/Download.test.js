@@ -9,19 +9,19 @@ export const getTmpDir = (prefix = 'foo-') => {
   return mkdtemp(join(tmpdir(), prefix))
 }
 
-const mswServer = setupServer()
+// const mswServer = setupServer()
 
-beforeAll(() => {
-  mswServer.listen()
-})
+// beforeAll(() => {
+//   mswServer.listen()
+// })
 
-afterEach(() => {
-  mswServer.resetHandlers()
-})
+// afterEach(() => {
+//   mswServer.resetHandlers()
+// })
 
-afterAll(() => {
-  mswServer.close()
-})
+// afterAll(() => {
+//   mswServer.close()
+// })
 
 test.skip('download - error - 404', async () => {
   mswServer.use(
