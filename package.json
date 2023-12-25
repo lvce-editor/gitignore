@@ -3,6 +3,7 @@
   "version": "0.0.0-dev",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "postinstall": "lerna bootstrap --ci",
     "test": "lerna run test",
