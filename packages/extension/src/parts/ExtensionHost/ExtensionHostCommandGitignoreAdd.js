@@ -1,6 +1,5 @@
 import * as Github from '../Github/Github.js'
 import * as Download from '../Download/Download.js'
-import { join } from 'path'
 
 export const id = 'gitignore.add'
 
@@ -26,7 +25,7 @@ export const execute = async () => {
   const url = selectedPick.url
 
   const workspaceFolder = vscode.getWorkspaceFolder()
-  const gitignorePath = join(workspaceFolder, '.gitignore')
+  const gitignorePath = `${workspaceFolder}/.gitignore`
   // TODO download it to the current workspace
   await Download.download(url, gitignorePath)
 
