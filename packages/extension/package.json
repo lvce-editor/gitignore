@@ -23,7 +23,7 @@
     "@types/jsonfile": "^6.1.4",
     "@types/verror": "^1.10.9",
     "jest": "^28.1.3",
-    "msw": "^0.44.2"
+    "msw": "0.44.2"
   },
   "jest": {
     "testMatch": [
