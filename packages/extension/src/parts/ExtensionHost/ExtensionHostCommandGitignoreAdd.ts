@@ -10,8 +10,8 @@ const toPick = (gitIgnoreFile) => {
 }
 
 const getPicks = async () => {
-  // @ts-ignore
-  const gitignoreFiles = await Github.getGetGitIgnoreFiles()
+  const gitignoreFiles = await Github.getGetGitIgnoreFiles('', { cache: true })
+  console.log({ gitignoreFiles })
   return gitignoreFiles
 }
 
