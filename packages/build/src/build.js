@@ -36,7 +36,7 @@ fs.cpSync(join(extension, 'src'), join(root, 'dist', 'src'), {
 })
 
 await bundleJs(
-  join(root, 'dist', 'src', 'gitignoreMain.js'),
+  join(root, 'dist', 'src', 'gitignoreMain.ts'),
   join(root, 'dist', 'dist', 'gitignoreMain.js'),
 )
 
