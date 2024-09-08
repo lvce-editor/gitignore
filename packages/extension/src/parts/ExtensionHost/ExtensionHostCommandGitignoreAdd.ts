@@ -1,5 +1,5 @@
-import * as Github from '../Github/Github.js'
-import * as Download from '../Download/Download.js'
+import * as Github from '../Github/Github.ts'
+import * as Download from '../Download/Download.ts'
 
 export const id = 'gitignore.add'
 
@@ -10,6 +10,7 @@ const toPick = (gitIgnoreFile) => {
 }
 
 const getPicks = async () => {
+  // @ts-ignore
   const gitignoreFiles = await Github.getGetGitIgnoreFiles()
   return gitignoreFiles
 }

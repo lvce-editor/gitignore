@@ -1,4 +1,4 @@
-import * as Rpc from '../Rpc/Rpc.js'
+import * as Rpc from '../Rpc/Rpc.ts'
 
 /**
  *

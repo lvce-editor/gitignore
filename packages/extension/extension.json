@@ -3,7 +3,7 @@
   "name": "gitignore",
   "description": "Gitignore Integration",
   "activation": ["onCommand:gitignore.add", "*"],
-  "browser": "src/gitignoreMain.js",
+  "browser": "src/gitignoreMain.ts",
   "icon": "./icon.png",
   "commands": [
     {

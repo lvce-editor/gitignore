@@ -1,5 +1,5 @@
-import * as ExtensionHostCommandGitignoreAdd from '../ExtensionHost/ExtensionHostCommandGitignoreAdd.js'
-import * as ExtensionInfo from '../ExtensionInfo/ExtensionInfo.js'
+import * as ExtensionHostCommandGitignoreAdd from '../ExtensionHost/ExtensionHostCommandGitignoreAdd.ts'
+import * as ExtensionInfo from '../ExtensionInfo/ExtensionInfo.ts'
 
 export const activate = ({ path }) => {
   ExtensionInfo.setPath(path)
