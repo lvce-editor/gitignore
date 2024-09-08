@@ -1,5 +1,5 @@
-import * as ExtensionInfo from '../ExtensionInfo/ExtensionInfo.js'
-import * as GetGitIgnoreNodePath from '../GetGitIgnoreNodePath/GetGitIgnoreNodePath.js'
+import * as ExtensionInfo from '../ExtensionInfo/ExtensionInfo.ts'
+import * as GetGitIgnoreNodePath from '../GetGitIgnoreNodePath/GetGitIgnoreNodePath.ts'
 
 export const state = {
   /**
@@ -21,6 +21,7 @@ const createRpc = async () => {
 
 export const invoke = async (method, ...params) => {
   if (!state.rpcPromise) {
+    // @ts-ignore
     state.rpcPromise = createRpc()
   }
   const rpc = await state.rpcPromise
