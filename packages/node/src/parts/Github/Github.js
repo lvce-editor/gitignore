@@ -2,6 +2,7 @@ import jsonfile from 'jsonfile'
 import { mkdir } from 'node:fs/promises'
 import { dirname, join } from 'node:path'
 import VError from 'verror'
+import * as GetCachePath from '../GetCachePath/GetCachePath.js'
 import * as Platform from '../Platform/Platform.js'
 
 // TODO update cache after specified amount of time
@@ -30,7 +31,7 @@ export const getGitignoreFilesFromGithubApi = async (path) => {
   }
   if ('x-ratelimit-remaining' in result.headers) {
     console.info(
-      `[vscode-gitignore] Github API ratelimit remaining: ${result.headers['x-ratelimit-remaining']}`
+      `[vscode-gitignore] Github API ratelimit remaining: ${result.headers['x-ratelimit-remaining']}`,
     )
   }
   return result
@@ -47,9 +48,9 @@ const getGitignoreFilesFromCache = async (cachePath) => {
 
 const getGitignoreFilesRaw = async (path, { cache = false } = {}) => {
   const cachePath = join(
-    Platform.getCachePath(),
+    GetCachePath.getCachePath(),
     'github',
-    `${path || 'index'}.json`
+    `${path || 'index'}.json`,
   )
   if (cache) {
     const cachedResult = await getGitignoreFilesFromCache(cachePath)
