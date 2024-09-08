@@ -10,18 +10,20 @@
     "dev": "node ./node_modules/@lvce-editor/server/bin/server.js --only-extension=packages/extension --test-path=packages/e2e",
     "type-check": "tsc -b",
     "e2e": "cd packages/e2e && npm run e2e",
-    "e2e:headless": "cd packages/e2e && npm run e2e:headless"
+    "e2e:headless": "cd packages/e2e && npm run e2e:headless",
+    "build": "node scripts/build.js"
   },
   "keywords": [],
   "author": "Lvce Editor",
   "license": "MIT",
   "devDependencies": {
-    "@lvce-editor/server": "^0.24.3",
+    "@lerna/legacy-package-management": "^8.1.8",
+    "@lvce-editor/server": "^0.33.11",
     "@types/node": "^22.5.4",
     "lerna": "^8.1.8",
     "prettier": "^3.3.3",
-    "typescript": "^5.5.4",
-    "@lerna/legacy-package-management": "^8.1.8"
+    "ts-jest": "^29.2.5",
+    "typescript": "^5.5.4"
   },
   "prettier": {
     "semi": false,

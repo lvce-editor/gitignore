@@ -1,7 +1,7 @@
+import { VError } from '@lvce-editor/verror'
 import jsonfile from 'jsonfile'
 import { mkdir } from 'node:fs/promises'
 import { dirname, join } from 'node:path'
-import VError from 'verror'
 import * as GetCachePath from '../GetCachePath/GetCachePath.js'
 import * as Platform from '../Platform/Platform.js'
 
