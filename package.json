@@ -10,7 +10,8 @@
     "dev": "node ./node_modules/@lvce-editor/server/bin/server.js --only-extension=packages/extension --test-path=packages/e2e",
     "type-check": "tsc -b",
     "e2e": "cd packages/e2e && npm run e2e",
-    "e2e:headless": "cd packages/e2e && npm run e2e:headless"
+    "e2e:headless": "cd packages/e2e && npm run e2e:headless",
+    "build": "node scripts/build.js"
   },
   "keywords": [],
   "author": "Lvce Editor",
