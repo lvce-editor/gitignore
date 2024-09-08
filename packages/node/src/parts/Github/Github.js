@@ -85,7 +85,6 @@ export const getGetGitIgnoreFiles = async (path, options) => {
       .map(toGitignoreFile)
     return gitignoreFiles
   } catch (error) {
-    // @ts-ignore
     throw new VError(error, 'Failed to get gitignore files')
   }
 }

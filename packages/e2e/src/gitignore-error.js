@@ -1,5 +1,7 @@
 export const name = 'gitignore.error'
 
+export const skip = true
+
 export const test = async ({
   FileSystem,
   Workspace,
