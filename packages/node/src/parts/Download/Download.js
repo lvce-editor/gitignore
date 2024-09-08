@@ -1,9 +1,10 @@
+import { VError } from '@lvce-editor/verror'
 import { existsSync } from 'fs'
 import got from 'got'
 import { createWriteStream } from 'node:fs'
 import { rm } from 'node:fs/promises'
 import { pipeline } from 'node:stream/promises'
-import VError from 'verror'
+
 /**
  *
  * @param {string} url
@@ -21,7 +22,6 @@ export const download = async (url, outFile) => {
     } catch {
       // ignore
     }
-    // @ts-ignore
     throw new VError(error, `Failed to download "${url}"`)
   }
 }
