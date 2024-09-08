@@ -6,12 +6,12 @@ export const id = 'gitignore.add'
 const toPick = (gitIgnoreFile) => {
   return {
     label: gitIgnoreFile.label,
+    url: gitIgnoreFile.url,
   }
 }
 
 const getPicks = async () => {
   const gitignoreFiles = await Github.getGetGitIgnoreFiles('', { cache: true })
-  console.log({ gitignoreFiles })
   return gitignoreFiles
 }
 
@@ -28,7 +28,12 @@ export const execute = async () => {
 
   // @ts-ignore
   const workspaceFolder = vscode.getWorkspaceFolder()
+  if (!workspaceFolder) {
+    throw new Error('no workspace folder open')
+  }
   const gitignorePath = `${workspaceFolder}/.gitignore`
+
+  console.log({ selectedPick })
   // TODO download it to the current workspace
   await Download.download(url, gitignorePath)
 
