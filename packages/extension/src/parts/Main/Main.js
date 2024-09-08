@@ -3,6 +3,7 @@ import * as ExtensionInfo from '../ExtensionInfo/ExtensionInfo.js'
 
 export const activate = ({ path }) => {
   ExtensionInfo.setPath(path)
+  // @ts-ignore
   vscode.registerCommand(ExtensionHostCommandGitignoreAdd)
 }
 
