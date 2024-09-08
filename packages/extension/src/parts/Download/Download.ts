@@ -1,10 +1,5 @@
 import * as Rpc from '../Rpc/Rpc.ts'
 
-/**
- *
- * @param {string} url
- * @param {string} outFile
- */
-export const download = async (url, outFile) => {
+export const download = async (url: string, outFile: string) => {
   return Rpc.invoke('Download.download', url, outFile)
 }
