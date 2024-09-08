@@ -15,6 +15,7 @@ const getPicks = async () => {
 }
 
 export const execute = async () => {
+  // @ts-ignore
   const selectedPick = await vscode.showQuickPick({
     getPicks,
     toPick,
@@ -24,10 +25,12 @@ export const execute = async () => {
   }
   const url = selectedPick.url
 
+  // @ts-ignore
   const workspaceFolder = vscode.getWorkspaceFolder()
   const gitignorePath = `${workspaceFolder}/.gitignore`
   // TODO download it to the current workspace
   await Download.download(url, gitignorePath)
 
+  // @ts-ignore
   vscode.showNotification('info', 'file created successfully')
 }
