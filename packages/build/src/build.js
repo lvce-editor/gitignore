@@ -23,10 +23,10 @@ fs.writeFileSync(
 )
 fs.copyFileSync(join(root, 'README.md'), join(root, 'dist', 'README.md'))
 fs.copyFileSync(join(root, 'LICENSE'), join(root, 'dist', 'LICENSE'))
-// fs.copyFileSync(
-//   join(root, 'ThirdPartyNotices.txt'),
-//   join(root, 'dist', 'ThirdPartyNotices.txt'),
-// )
+fs.copyFileSync(
+  join(root, 'ThirdPartyNotices.txt'),
+  join(root, 'dist', 'ThirdPartyNotices.txt'),
+)
 fs.copyFileSync(
   join(extension, 'extension.json'),
   join(root, 'dist', 'extension.json'),
