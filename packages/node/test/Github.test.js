@@ -1,4 +1,4 @@
-import { jest } from '@jest/globals'
+import { jest, test, expect } from '@jest/globals'
 
 jest.unstable_mockModule('@octokit/rest', () => ({
   Octokit: jest.fn().mockImplementation(() => {
@@ -185,9 +185,9 @@ test('getGetGitIgnoreFiles - error', async () => {
     }
   })
   await expect(
-    Github.getGetGitIgnoreFiles('Global', { cache: false })
+    Github.getGetGitIgnoreFiles('Global', { cache: false }),
   ).rejects.toThrowError(
-    "Failed to load gitignore files from github api: Response Code: 418 I'm a teapot"
+    "Failed to load gitignore files from github api: Response Code: 418 I'm a teapot",
   )
 })
 
@@ -199,7 +199,7 @@ test('getGetGitIgnoreFiles - error - rate limiting exceeded', async () => {
         repos: {
           async getContent() {
             throw new Error(
-              "API rate limit exceeded for 0.0.0.0. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)"
+              "API rate limit exceeded for 0.0.0.0. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)",
             )
           },
         },
@@ -208,8 +208,8 @@ test('getGetGitIgnoreFiles - error - rate limiting exceeded', async () => {
   })
   // TODO error message could be improved, it is a bit redundant and verbose
   await expect(
-    Github.getGetGitIgnoreFiles('Global', { cache: false })
+    Github.getGetGitIgnoreFiles('Global', { cache: false }),
   ).rejects.toThrowError(
-    "Failed to get gitignore files: Failed to load gitignore files from github api: API rate limit exceeded for 0.0.0.0. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)"
+    "Failed to get gitignore files: Failed to load gitignore files from github api: API rate limit exceeded for 0.0.0.0. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)",
   )
 })
