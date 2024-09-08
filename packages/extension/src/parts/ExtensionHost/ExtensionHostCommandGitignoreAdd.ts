@@ -1,5 +1,5 @@
 import * as Github from '../Github/Github.ts'
-import * as Download from '../Download/Download.js'
+import * as Download from '../Download/Download.ts'
 
 export const id = 'gitignore.add'
 
