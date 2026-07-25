@@ -11,6 +11,10 @@ const CACHE_EXPIRATION_TIME = 3600
 
 const RE_GITIGNORE = /.gitignore/
 
+/**
+ * @param {string} path
+ * @returns {Promise<{data: any, headers: any}>}
+ */
 export const getGitignoreFilesFromGithubApi = async (path) => {
   const { Octokit } = await import('@octokit/rest')
   const baseUrl = Platform.getBaseUrl()
