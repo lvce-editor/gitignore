@@ -28,7 +28,8 @@ export const test = async ({ Command, FileSystem, Workspace }) => {
 
   // assert
   const content = await waitForFile(FileSystem, `${tmpDir}/.gitignore`)
-  if (content !== '#!/usr/bin/env false\n') {
+  const normalizedContent = content.replaceAll('\r\n', '\n')
+  if (normalizedContent !== '#!/usr/bin/env false\n') {
     throw new Error(`unexpected .gitignore content: ${JSON.stringify(content)}`)
   }
 }
