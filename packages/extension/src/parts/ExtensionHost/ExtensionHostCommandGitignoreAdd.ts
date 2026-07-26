@@ -1,3 +1,8 @@
+import {
+  getWorkspaceFolder,
+  showNotification,
+  showQuickPick,
+} from '@lvce-editor/api'
 import * as Github from '../Github/Github.ts'
 import * as Download from '../Download/Download.ts'
 
@@ -5,38 +10,39 @@ export const id = 'gitignore.add'
 
 const toPick = (gitIgnoreFile) => {
   return {
+    description: gitIgnoreFile.description,
     label: gitIgnoreFile.label,
-    url: gitIgnoreFile.url,
+    value: gitIgnoreFile.url,
   }
 }
 
 const getPicks = async () => {
-  const gitignoreFiles = await Github.getGetGitIgnoreFiles('', { cache: true })
+  const gitignoreFiles = await Github.getGetGitIgnoreFiles('')
   return gitignoreFiles
 }
 
-export const execute = async () => {
-  // @ts-ignore
-  const selectedPick = await vscode.showQuickPick({
-    getPicks,
-    toPick,
+const pickTemplate = async (): Promise<unknown> => {
+  const gitignoreFiles = await getPicks()
+  return showQuickPick({
+    items: gitignoreFiles.map(toPick),
+    placeholder: 'Select a gitignore template',
   })
-  if (!selectedPick) {
+}
+
+export const execute = async (templateUrl?: unknown): Promise<void> => {
+  const url =
+    typeof templateUrl === 'string' ? templateUrl : await pickTemplate()
+  if (typeof url !== 'string') {
     return
   }
-  const url = selectedPick.url
 
-  // @ts-ignore
-  const workspaceFolder = vscode.getWorkspaceFolder()
+  const workspaceFolder = await getWorkspaceFolder()
   if (!workspaceFolder) {
     throw new Error('no workspace folder open')
   }
   const gitignorePath = `${workspaceFolder}/.gitignore`
 
-  console.log({ selectedPick })
-  // TODO download it to the current workspace
   await Download.download(url, gitignorePath)
 
-  // @ts-ignore
-  vscode.showNotification('info', 'file created successfully')
+  await showNotification('info', 'file created successfully')
 }

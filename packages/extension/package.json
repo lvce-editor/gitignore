@@ -27,5 +27,8 @@
         }
       ]
     }
+  },
+  "devDependencies": {
+    "@lvce-editor/api": "^8.63.0"
   }
 }

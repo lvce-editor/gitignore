@@ -2,8 +2,14 @@
   "id": "builtin.gitignore",
   "name": "gitignore",
   "description": "Gitignore Integration",
-  "activation": ["onCommand:gitignore.add", "*"],
-  "browser": "src/gitignoreMain.ts",
+  "activation": ["onCommand:gitignore.add"],
+  "browser": "dist/gitignoreMain.js",
+  "isolated": true,
+  "contentSecurityPolicy": [
+    "default-src 'none'",
+    "connect-src 'self' https://api.github.com https://raw.githubusercontent.com",
+    "script-src 'self'"
+  ],
   "icon": "./icon.png",
   "commands": [
     {

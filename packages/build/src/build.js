@@ -1,9 +1,11 @@
-import { bundleJs, packageExtension } from '@lvce-editor/package-extension'
+import { packageExtension } from '@lvce-editor/package-extension'
 import fs, { readFileSync } from 'node:fs'
 import path, { join } from 'node:path'
 import { root } from './root.js'
 
 const extension = path.join(root, 'packages', 'extension')
+
+await import('./build-extension.js')
 
 fs.rmSync(join(root, 'dist'), { recursive: true, force: true })
 
@@ -16,6 +18,7 @@ delete packageJson.xo
 delete packageJson.jest
 delete packageJson.prettier
 delete packageJson.devDependencies
+packageJson.main = 'dist/gitignoreMain.js'
 
 fs.writeFileSync(
   join(root, 'dist', 'package.json'),
@@ -35,8 +38,9 @@ fs.cpSync(join(extension, 'src'), join(root, 'dist', 'src'), {
   recursive: true,
 })
 
-await bundleJs(
-  join(root, 'dist', 'src', 'gitignoreMain.ts'),
+fs.mkdirSync(join(root, 'dist', 'dist'))
+fs.copyFileSync(
+  join(extension, 'dist', 'gitignoreMain.js'),
   join(root, 'dist', 'dist', 'gitignoreMain.js'),
 )
 

@@ -1,4 +1,3 @@
-import { replace } from '@lvce-editor/package-extension'
 import { exportStatic } from '@lvce-editor/shared-process'
 import { cp } from 'node:fs/promises'
 import path from 'node:path'
@@ -21,9 +20,3 @@ await cp(
   path.join(root, 'dist', commitHash, 'extensions', 'builtin.gitignore'),
   { recursive: true, force: true },
 )
-
-await replace({
-  path: path.join(root, 'dist', commitHash, 'config', 'webExtensions.json'),
-  occurrence: 'src/gitIgnoreMain.ts',
-  replacement: 'dist/gitIgnoreMain.js',
-})

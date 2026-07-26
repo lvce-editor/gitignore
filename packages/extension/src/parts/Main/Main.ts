@@ -1,10 +1,10 @@
+import {
+  activate as activateExtensionApi,
+  registerCommand,
+} from '@lvce-editor/api'
 import * as ExtensionHostCommandGitignoreAdd from '../ExtensionHost/ExtensionHostCommandGitignoreAdd.ts'
-import * as ExtensionInfo from '../ExtensionInfo/ExtensionInfo.ts'
 
-export const activate = ({ path }) => {
-  ExtensionInfo.setPath(path)
-  // @ts-ignore
-  vscode.registerCommand(ExtensionHostCommandGitignoreAdd)
+export const activate = async (): Promise<void> => {
+  await activateExtensionApi()
+  registerCommand(ExtensionHostCommandGitignoreAdd)
 }
-
-console.log('hello from extension')
