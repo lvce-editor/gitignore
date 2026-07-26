@@ -1,16 +1,34 @@
-export const name = 'gitignore.error'
+export const name = 'gitignore.add'
 
-export const skip = true
+const waitForFile = async (FileSystem, path) => {
+  for (let i = 0; i < 20; i++) {
+    try {
+      const content = await FileSystem.readFile(path)
+      if (content) {
+        return content
+      }
+    } catch {}
+    await new Promise((resolve) => {
+      // @ts-ignore
+      setTimeout(resolve, 100)
+    })
+  }
+  throw new Error(`expected ${path} to be created`)
+}
 
-export const test = async ({
-  FileSystem,
-  Workspace,
-  Settings,
-  SideBar,
-  KeyBoard,
-  Locator,
-  expect,
-}) => {
-  //  TODO mock network to return a not found response
-  // TODO verify helpful error message is displayed in that case
+export const test = async ({ Command, FileSystem, Workspace }) => {
+  // arrange
+  const tmpDir = await FileSystem.getTmpDir({ scheme: 'file' })
+  await Workspace.setPath(tmpDir)
+
+  // act
+  // @ts-ignore ImportMeta.resolve is available in the test runtime.
+  const templateUrl = import.meta.resolve('../fixtures/AL.js')
+  await Command.executeExtensionCommand('gitignore.add', templateUrl)
+
+  // assert
+  const content = await waitForFile(FileSystem, `${tmpDir}/.gitignore`)
+  if (content !== '#!/usr/bin/env false\n') {
+    throw new Error(`unexpected .gitignore content: ${JSON.stringify(content)}`)
+  }
 }
