@@ -1,0 +1,25 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "workspaces": {
+    ".": {
+      "entry": ["scripts/**/*.js"],
+      "project": ["scripts/**/*.js"]
+    },
+    "packages/build": {
+      "entry": ["src/build.js", "src/build-static.js"],
+      "project": ["src/**/*.js"]
+    },
+    "packages/e2e": {
+      "entry": ["src/**/*.js"],
+      "project": ["src/**/*.js"]
+    },
+    "packages/extension": {
+      "entry": ["src/gitignoreMain.ts", "test/**/*.test.ts"],
+      "project": ["src/**/*.ts", "test/**/*.ts"]
+    },
+    "packages/node": {
+      "entry": ["src/main.js", "test/**/*.test.js"],
+      "project": ["src/**/*.js", "test/**/*.js"]
+    }
+  }
+}

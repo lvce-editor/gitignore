@@ -29,6 +29,7 @@
     }
   },
   "devDependencies": {
+    "@jest/globals": "^29.7.0",
     "@lvce-editor/api": "^8.63.0"
   }
 }
