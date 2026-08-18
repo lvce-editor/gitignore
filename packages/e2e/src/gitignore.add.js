@@ -20,10 +20,11 @@ export const test = async ({ Command, FileSystem, Workspace }) => {
   // arrange
   const tmpDir = await FileSystem.getTmpDir({ scheme: 'file' })
   await Workspace.setPath(tmpDir)
+  const templatePath = `${tmpDir}/template.gitignore`
+  await FileSystem.writeFile(templatePath, '#!/usr/bin/env false\n')
 
   // act
-  // @ts-ignore ImportMeta.resolve is available in the test runtime.
-  const templateUrl = import.meta.resolve('../fixtures/AL.js')
+  const templateUrl = templatePath
   await Command.executeExtensionCommand('gitignore.add', templateUrl)
 
   // assert
